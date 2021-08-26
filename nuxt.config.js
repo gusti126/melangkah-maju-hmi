@@ -44,10 +44,36 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
   ],
 
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+          maxAge: 60 * 60 * 24 * 30,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: 'data',
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: 'login', method: 'post' },
+          logout: false,
+          user: { url: 'profile', method: 'get' },
+        },
+      },
+    },
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'https://komfaktek.gustirizkia.my.id/api/',
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

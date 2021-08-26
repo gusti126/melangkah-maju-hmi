@@ -14,6 +14,7 @@
             <div class="w-full mt-2">
               <input
                 type="text"
+                v-model="login.email"
                 class="
                   rounded-full
                   p-2
@@ -31,6 +32,7 @@
             <div class="w-full mt-2">
               <input
                 type="password"
+                v-model="login.password"
                 class="
                   rounded-full
                   p-2
@@ -39,6 +41,7 @@
                   border border-gray-500
                   focus:border-transparent focus:outline-none
                 "
+                @keyup.enter="userLogin"
                 placeholder="Input Password"
               />
             </div>
@@ -46,8 +49,7 @@
               <a href="" class="text-hijau-button">Lupa Password ?</a>
             </div>
             <div class="w-full mt-4">
-              <nuxt-link
-                to="/"
+              <div
                 class="
                   bg-hijau-button
                   py-2
@@ -55,9 +57,12 @@
                   text-center text-white
                   rounded-full
                   hover:bg-hijau-header
+                  cursor-pointer
                 "
-                >Login</nuxt-link
+                @click="userLogin"
               >
+                Login
+              </div>
             </div>
             <div class="w-full mt-4">
               <nuxt-link
@@ -79,3 +84,25 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      login: {
+        email: '',
+        password: '',
+      },
+    }
+  },
+  methods: {
+    async userLogin() {
+      let response = await this.$auth
+        .loginWith('local', { data: this.login })
+        .then((ress) => {
+          console.log(ress)
+        })
+    },
+  },
+}
+</script>
